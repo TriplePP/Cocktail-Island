@@ -1,0 +1,19 @@
+Information to fetch and include on site
+
+Cocktail Name
+cocktailInfo.drinks[num?].strDrink
+
+Alcholic
+cocktailInfo.drinks[num?].strAlcoholic
+
+Thumbnail Image
+cocktailInfo.drinks[num?].strDrinkThumb
+
+Image
+cocktailInfo.drinks[num?].strImageSource
+
+Glass
+cocktailInfo.drinks[num?].strGlass
+
+Ingredients
+cocktailInfo.drinks[num?].strIngredient(followed my number)
