@@ -22,8 +22,10 @@
             name="drink"
             class="form-items-style"
             id="drink"
+            onfocus="this.value=''"
             value="Enter cocktail name"
           />
+          <p class="error"></p>
           <input
             type="submit"
             value="Find my drink!"
@@ -37,7 +39,7 @@
       <img src="" alt="" />
     </section>
     <!-- Results of search to be added by API -->
-    <div class="cocktail-results">
+    <div class="cocktail-results" id="cocktail-results">
       <!-- <div class="drink-wrap form-container container-styling">
         <h2 class="cocktail-name">Imperial Fizz</h3>
         <div class="drink-details-wrap">

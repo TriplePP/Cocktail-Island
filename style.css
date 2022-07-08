@@ -91,6 +91,7 @@ h3 {
   transform: translateY(10px);
 }
 
+/* Input form styling */
 .form-container img {
   height: 200px;
 }
@@ -101,12 +102,19 @@ h3 {
   justify-content: center;
 }
 
-/* buttons*/
-.btn {
+.drink-search .btn {
   background-color: pink;
 }
 
-/* Styling for results from cocktail search */
+.drink-search #drink {
+  color: rgb(178, 175, 175);
+}
+
+.drink-search #drink:focus {
+  color: black;
+}
+
+/* Styling for cocktail search results */
 
 .cocktail-results img {
   height: 14rem;
