@@ -10,8 +10,8 @@ const errormMsg = document.querySelector(".error");
 //Search for cocktails on click
 submit.addEventListener("click", (e) => {
   const apiUrl = `https://thecocktaildb.com/api/json/v1/1/search.php?s=${input.value.trim()}`;
+  removeErrorMsg();
   getCocktails(e, apiUrl);
-  removerErrorMsg();
 });
 
 // Return random cocktail
@@ -25,19 +25,24 @@ async function getCocktails(e, apiUrl) {
   e.preventDefault();
 
   try {
+    // Raise error if input left blank
+    if (!input.value.trim()) {
+      console.log("false");
+      throw "Please enter a cocktail name";
+    }
     const response = await fetch(apiUrl);
     let cocktailInfo = await response.json();
     createHTML(cocktailInfo);
+    console.log(cocktailInfo);
   } catch (err) {
     console.log(err);
     // Display error to user
-    errormMsg.textContent =
-      "Sorry, we couldn't find that one. Please try another cocktail.";
+    errormMsg.textContent = err;
   }
 }
 
 // Remove existing error message if any
-function removerErrorMsg() {
+function removeErrorMsg() {
   if (errormMsg.textContent) {
     errormMsg.textContent = "";
   }
@@ -58,31 +63,35 @@ function getIngredients(drink) {
 function createHTML(cocktailInfo) {
   const cocktailArr = cocktailInfo.drinks;
   let drinkHTML = "";
-  cocktailArr.forEach((drink) => {
-    drinkHTML += `
-      <div class="drink-wrap form-container container-styling">
-        <h2 class="cocktail-name">${drink.strDrink}</h3>
-        <div class="drink-details-wrap">
-          <img src="${drink.strDrinkThumb}" alt="" class="drink-image" />
-          <div class="drink-details">
-            <h4 class="alcholic">Alcolic or Non-alcoholic</h4>
-            <p>${drink.strAlcoholic}</p>
-            <h4 class="glass">Glass type</h4>
-            <p>${drink.strGlass}</p>
-            <h4 class="ingredients">Ingredients</h5>
-            <p>${getIngredients(drink)}</p>
+  try {
+    cocktailArr.forEach((drink) => {
+      drinkHTML += `
+        <div class="drink-wrap form-container container-styling">
+          <h2 class="cocktail-name">${drink.strDrink}</h3>
+          <div class="drink-details-wrap">
+            <img src="${drink.strDrinkThumb}" alt="" class="drink-image" />
+            <div class="drink-details">
+              <h4 class="alcholic">Alcolic or Non-alcoholic</h4>
+              <p>${drink.strAlcoholic}</p>
+              <h4 class="glass">Glass type</h4>
+              <p>${drink.strGlass}</p>
+              <h4 class="ingredients">Ingredients</h5>
+              <p>${getIngredients(drink)}</p>
+            </div>
           </div>
+          <h4>Instructions</h4>
+          <p class="instructions">${drink.strInstructions}</p>
         </div>
-        <h4>Instructions</h4>
-        <p class="instructions">${drink.strInstructions}</p>
-      </div>
-    `;
-    cocktailResults.innerHTML = drinkHTML;
-    // Scroll down to loaded content
-    window.scroll({
-      top: 700,
-      left: 0,
-      behavior: "smooth",
+      `;
+      cocktailResults.innerHTML = drinkHTML;
+      // Scroll down to loaded content
+      window.scroll({
+        top: 700,
+        left: 0,
+        behavior: "smooth",
+      });
     });
-  });
+  } catch (error) {
+    errormMsg.textContent = "Please enter a valid cockatail name";
+  }
 }
