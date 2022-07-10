@@ -27,7 +27,6 @@ async function getCocktails(e, apiUrl) {
   try {
     // Raise error if input left blank
     if (!input.value.trim()) {
-      console.log("false");
       throw "Please enter a cocktail name";
     }
     const response = await fetch(apiUrl);
@@ -48,21 +47,32 @@ function removeErrorMsg() {
   }
 }
 
-// Loop through individual ingredients and return as string
-function getIngredients(drink) {
-  let ingredients = [];
+// Loop through individual ingredients/measurements and return as an array
+function getArrayDetails(drink, key) {
+  let arr = [];
   let num = 1;
-  while (drink[`strIngredient${num}`]) {
-    ingredients.push(drink[`strIngredient${num}`]);
+  while (drink[`${key}${num}`]) {
+    arr.push(drink[`${key}${num}`]);
     num++;
   }
-  return ingredients.join(", ");
+  return arr;
+}
+
+// Create and combine ingredients and measurements arrays into one string and return
+function combineIngredientsMeasurements(drink) {
+  let ingredients = getArrayDetails(drink, "strIngredient");
+  let measurements = getArrayDetails(drink, "strMeasure");
+  const combinedArr = ingredients.map((element, index) => {
+    return [element, measurements[index]].join(" ");
+  });
+  return combinedArr.join(", ");
 }
 
 // Compile HTML for each drink
 function createHTML(cocktailInfo) {
   const cocktailArr = cocktailInfo.drinks;
   let drinkHTML = "";
+  // Only compile HMTL if valid drink is entered
   try {
     cocktailArr.forEach((drink) => {
       drinkHTML += `
@@ -76,7 +86,7 @@ function createHTML(cocktailInfo) {
               <h4 class="glass">Glass type</h4>
               <p>${drink.strGlass}</p>
               <h4 class="ingredients">Ingredients</h5>
-              <p>${getIngredients(drink)}</p>
+              <p>${combineIngredientsMeasurements(drink)}</p>
             </div>
           </div>
           <h4>Instructions</h4>
@@ -92,6 +102,6 @@ function createHTML(cocktailInfo) {
       });
     });
   } catch (error) {
-    errormMsg.textContent = "Please enter a valid cockatail name";
+    errormMsg.textContent = "Please enter a valid cocktail name";
   }
 }

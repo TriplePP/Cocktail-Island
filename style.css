@@ -13,6 +13,7 @@ body {
   align-items: center;
 }
 
+/* styling below resolves background not being fixed on IOS mobile */
 body:before {
   content: "";
   display: block;

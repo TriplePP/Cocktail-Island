@@ -21,5 +21,8 @@ cocktailInfo.drinks[num?].strIngredient(followed my number)
 Instructions
 cocktailInfo.drinks[num?].strIntructions
 
+Measurements
+cocktailInfo.drinks[num?].strMeasure(followed my number)
+
 Lookup a random cocktail
 www.thecocktaildb.com/api/json/v1/1/random.php
