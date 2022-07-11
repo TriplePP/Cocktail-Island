@@ -4,7 +4,6 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-
   background-attachment: fixed;
   font-family: "Pacifico", cursive;
   display: flex;
@@ -89,7 +88,6 @@ h3 {
 }
 
 /* Main heading  */
-
 .main-heading {
   background: linear-gradient(to right, rgb(242, 240, 109), rgb(250, 251, 234));
   padding: 0 1rem;
@@ -97,32 +95,34 @@ h3 {
 }
 
 .main-heading h1 {
-  /* padding-bottom: 0; */
   font-size: 3rem;
   color: pink;
+  /* Add border to text */
   -webkit-text-stroke: 1px black;
 }
 
 .main-heading img {
   height: 70px;
-  transform: translateY(10px);
 }
 
-/* Input form styling */
+/* Seach form image */
 .form-container img {
   height: 200px;
 }
 
+/* Search form */
 .drink-search {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
+/* Search button */
 .drink-search .btn {
   background-color: pink;
 }
 
+/* Input text area */
 .drink-search #drink {
   color: rgb(178, 175, 175);
 }
@@ -138,6 +138,7 @@ h3 {
   border-radius: 5px;
 }
 
+/* Classes below added with javascript */
 .drink-wrap {
   max-width: 600px;
   flex-direction: column;
@@ -160,6 +161,8 @@ h3 {
   padding: 1rem;
   text-align: center;
 }
+
+/* Resize on mobile */
 
 @media (max-width: 580px) {
   /* Stack form items on mobile */

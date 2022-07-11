@@ -1,14 +1,14 @@
-const submit = document.querySelector(".submit");
+const submitBtn = document.querySelector(".submit");
 const input = document.querySelector("#drink");
 const randomBtn = document.querySelector(".btn");
-const randomCocktailUrl = "https://thecocktaildb.com/api/json/v1/1/random.php";
 const cocktailResults = document.querySelector(".cocktail-results");
 const errormMsg = document.querySelector(".error");
+const randomCocktailUrl = "https://thecocktaildb.com/api/json/v1/1/random.php";
 
 // EVENT LISTENERS
 
 //Search for cocktails on click
-submit.addEventListener("click", (e) => {
+submitBtn.addEventListener("click", (e) => {
   const apiUrl = `https://thecocktaildb.com/api/json/v1/1/search.php?s=${input.value.trim()}`;
   removeErrorMsg();
   getCocktails(e, apiUrl);
@@ -18,6 +18,13 @@ submit.addEventListener("click", (e) => {
 randomBtn.addEventListener("click", (e) => getCocktails(e, randomCocktailUrl));
 
 // FUNCTIONS
+
+// Remove existing error message if any
+function removeErrorMsg() {
+  if (errormMsg.textContent) {
+    errormMsg.textContent = "";
+  }
+}
 
 // Get data from API and pass to create HTML function
 async function getCocktails(e, apiUrl) {
@@ -32,40 +39,10 @@ async function getCocktails(e, apiUrl) {
     const response = await fetch(apiUrl);
     let cocktailInfo = await response.json();
     createHTML(cocktailInfo);
-    console.log(cocktailInfo);
   } catch (err) {
-    console.log(err);
     // Display error to user
     errormMsg.textContent = err;
   }
-}
-
-// Remove existing error message if any
-function removeErrorMsg() {
-  if (errormMsg.textContent) {
-    errormMsg.textContent = "";
-  }
-}
-
-// Loop through individual ingredients/measurements and return as an array
-function getArrayDetails(drink, key) {
-  let arr = [];
-  let num = 1;
-  while (drink[`${key}${num}`]) {
-    arr.push(drink[`${key}${num}`]);
-    num++;
-  }
-  return arr;
-}
-
-// Create and combine ingredients and measurements arrays into one string and return
-function combineIngredientsMeasurements(drink) {
-  let ingredients = getArrayDetails(drink, "strIngredient");
-  let measurements = getArrayDetails(drink, "strMeasure");
-  const combinedArr = ingredients.map((element, index) => {
-    return [element, measurements[index]].join(" ");
-  });
-  return combinedArr.join(", ");
 }
 
 // Compile HTML for each drink
@@ -102,6 +79,28 @@ function createHTML(cocktailInfo) {
       });
     });
   } catch (error) {
+    // Prompt user to enter another cocktail name if API returns null
     errormMsg.textContent = "Please enter a valid cocktail name";
   }
+}
+
+// Create and combine ingredients and measurements arrays into one string and return
+function combineIngredientsMeasurements(drink) {
+  let ingredients = getArrayDetails(drink, "strIngredient");
+  let measurements = getArrayDetails(drink, "strMeasure");
+  const combinedArr = ingredients.map((element, index) => {
+    return [element, measurements[index]].join(" ");
+  });
+  return combinedArr.join(", ");
+}
+
+// Loop through individual ingredients/measurements and return as an array
+function getArrayDetails(drink, key) {
+  let arr = [];
+  let num = 1;
+  while (drink[`${key}${num}`]) {
+    arr.push(drink[`${key}${num}`]);
+    num++;
+  }
+  return arr;
 }

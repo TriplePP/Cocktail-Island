@@ -1,5 +1,0 @@
-write a function that takes in the cocktail Info array of objects
-    loops over using for each item in array
-        uses template literals to enter specific information 
-        appends this to the div cocktail results
-    
