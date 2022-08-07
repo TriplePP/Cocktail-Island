@@ -47,6 +47,7 @@ async function getCocktails(e, apiUrl) {
 
 // Compile HTML for each drink
 function createHTML(cocktailInfo) {
+  console.log(cocktailInfo.drinks);
   const cocktailArr = cocktailInfo.drinks;
   let drinkHTML = "";
   // Only compile HMTL if valid drink is entered
@@ -86,6 +87,7 @@ function createHTML(cocktailInfo) {
 
 // Create and combine ingredients and measurements arrays into one string and return
 function combineIngredientsMeasurements(drink) {
+  // create ingredients and measurements arrays
   let ingredients = getArrayDetails(drink, "strIngredient");
   let measurements = getArrayDetails(drink, "strMeasure");
   const combinedArr = ingredients.map((element, index) => {
